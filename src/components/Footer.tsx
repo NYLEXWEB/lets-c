@@ -14,19 +14,21 @@ export default function Footer() {
   return (
     <footer className="bg-[#FBFBFD] text-neutral-800 pt-16 pb-12 border-t border-black/[0.06]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+
         {/* Top Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-black/[0.06]">
-          
+
           {/* Brand */}
           <div className="lg:col-span-4 space-y-3">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/images/brand-logo.png"
-              alt="Let's C Cleaning Logo"
-              className="h-8 sm:h-9 w-auto object-contain select-none"
-            />
-            
+            <div className="relative w-28 h-9 overflow-hidden rounded-lg bg-[#03B9F4] p-0.5">
+              <Image
+                src="/images/logo.png"
+                alt="Let's C Cleaning Logo"
+                fill
+                className="object-contain p-0.5"
+              />
+            </div>
+
             <p className="text-xs text-[#6E6E73] font-light leading-relaxed max-w-sm">
               Professional residential, sofa, mattress, and event cleaning services based in Thamarassery, Kozhikode.
             </p>
@@ -43,22 +45,19 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-xs font-light text-neutral-600">
               <li>
-                <Link href="#services" className="hover:text-black transition-colors">Services</Link>
+                <Link href="/services" className="hover:text-black transition-colors">Services Directory</Link>
               </li>
               <li>
-                <Link href="#why-us" className="hover:text-black transition-colors">Philosophy</Link>
+                <Link href="/#why-us" className="hover:text-black transition-colors">Philosophy</Link>
               </li>
               <li>
-                <Link href="#process" className="hover:text-black transition-colors">How It Works</Link>
+                <Link href="/gallery" className="hover:text-black transition-colors">Before & After Showcase</Link>
               </li>
               <li>
-                <Link href="#gallery" className="hover:text-black transition-colors">Before & After</Link>
+                <Link href="/reviews" className="hover:text-black transition-colors">Google Reviews (4.9★)</Link>
               </li>
               <li>
-                <Link href="#reviews" className="hover:text-black transition-colors">Google Reviews</Link>
-              </li>
-              <li>
-                <Link href="#booking" className="hover:text-black transition-colors">Book Online</Link>
+                <Link href="/contact" className="hover:text-black transition-colors">Contact & Enquiries</Link>
               </li>
             </ul>
           </div>
@@ -71,13 +70,13 @@ export default function Footer() {
             <ul className="space-y-2 text-xs font-light text-neutral-600">
               {SERVICES_DATA.map((s) => (
                 <li key={s.id}>
-                  <Link href="#services" className="hover:text-black transition-colors">
+                  <Link href={`/services/${s.id}`} className="hover:text-black transition-colors">
                     {s.title}
                   </Link>
                 </li>
               ))}
               <li>
-                <Link href="#booking" className="hover:text-black transition-colors text-[#03B9F4]">
+                <Link href="/contact" className="hover:text-black transition-colors text-[#03B9F4]">
                   Custom Inspection →
                 </Link>
               </li>

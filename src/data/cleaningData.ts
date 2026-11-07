@@ -1,136 +1,405 @@
+export interface ServiceTier {
+  id: string;
+  name: string;
+  price: number;
+  priceDisplay: string;
+  duration: string;
+  description?: string;
+  isPopular?: boolean;
+}
+
+export interface ServiceAddon {
+  id: string;
+  name: string;
+  price: number;
+  priceDisplay: string;
+  description?: string;
+}
+
 export interface ServiceItem {
   id: string;
+  slug: string;
   title: string;
+  category: "home" | "event" | "sofa" | "mattress";
+  categoryLabel: string;
+  rating: number;
+  reviewCount: number;
   shortDesc: string;
   tagline: string;
   image: string;
   popular?: boolean;
+  badge?: string;
   estimate: string;
+  startingPrice: number;
   duration: string;
   highlights: string[];
   inclusions: string[];
   idealFor: string[];
+  propertyTypes?: string[];
+  tiers: ServiceTier[];
+  addons: ServiceAddon[];
 }
 
 export const SERVICES_DATA: ServiceItem[] = [
   {
     id: "home-cleaning",
+    slug: "home-cleaning",
     title: "Home Cleaning",
-    shortDesc: "Professional cleaning for everyday comfort, deep sanitization, and lasting freshness.",
-    tagline: "Total home rejuvenation from floor to ceiling",
+    category: "home",
+    categoryLabel: "Residential",
+    rating: 4.9,
+    reviewCount: 52,
+    shortDesc: "Complete deep cleaning, machine floor buffing, bathroom descaling, kitchen wiping, and balcony pressure washing.",
+    tagline: "Total home rejuvenation for flats, apartments, and luxury villas",
     image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1200&q=80",
     popular: true,
+    badge: "Most Booked",
     estimate: "From ₹1,499",
+    startingPrice: 1499,
     duration: "3 – 5 Hours",
     highlights: [
-      "Floor scrubbing & machine buffing",
-      "Kitchen degreasing & chimney wipe down",
-      "Bathroom deep descaling & sanitization",
-      "Window glass, grills & balcony washing",
-      "Dusting of fans, fixtures & switchboards"
+      "Rotary machine floor scrubbing & buffing",
+      "Kitchen degreasing & exhaust wipe down",
+      "Bathroom descaling & hard-water stain removal",
+      "Window glass, balcony & grill washing",
+      "Ceiling fans, switchboards & fixture dusting"
     ],
     inclusions: [
-      "Deep vacuuming of all rooms & carpets",
-      "Floor scrubbing using single disc machines",
-      "Complete bathroom disinfection & hard-water stain removal",
-      "Kitchen countertop & exterior appliance wiping",
-      "Doors, windows, glass and skirting detailing"
+      "Deep vacuuming of all bedrooms, living area & carpets",
+      "Single-disc floor scrubbing with eco-neutral floor polish",
+      "Complete bathroom sanitation with tile grout scrubbing",
+      "Countertop sanitization & exterior cabinet wiping",
+      "Doors, windows, glass and skirting detailing",
+      "Post-cleaning supervisor walk-through handover"
     ],
     idealFor: [
       "Seasonal deep cleaning",
       "Move-in / Move-out handover",
       "Post-renovation dust elimination",
       "Festive home preparation"
-    ]
+    ],
+    propertyTypes: ["Flat / Apartment", "Independent Villa", "Row House"],
+    tiers: [
+      {
+        id: "1bhk",
+        name: "1 BHK Deep Clean",
+        price: 1499,
+        priceDisplay: "₹1,499",
+        duration: "2.5 – 3 Hours",
+        description: "1 Bedroom + 1 Hall + 1 Kitchen + 1 Bathroom",
+      },
+      {
+        id: "2bhk",
+        name: "2 BHK Deep Clean",
+        price: 2199,
+        priceDisplay: "₹2,199",
+        duration: "3.5 – 4 Hours",
+        description: "2 Bedrooms + 1 Hall + 1 Kitchen + 2 Bathrooms",
+        isPopular: true,
+      },
+      {
+        id: "3bhk",
+        name: "3 BHK Deep Clean",
+        price: 2999,
+        priceDisplay: "₹2,999",
+        duration: "4.5 – 5.5 Hours",
+        description: "3 Bedrooms + 1 Hall + 1 Dining + 1 Kitchen + 3 Bathrooms",
+      },
+      {
+        id: "4bhk-villa",
+        name: "4 BHK / Luxury Villa",
+        price: 3999,
+        priceDisplay: "₹3,999",
+        duration: "6+ Hours",
+        description: "Full duplex/villa detailing with outdoor sit-out wash",
+      },
+    ],
+    addons: [
+      {
+        id: "balcony-wash",
+        name: "Balcony High-Pressure Wash",
+        price: 299,
+        priceDisplay: "+₹299",
+        description: "Jet-wash balcony tiles and glass railings",
+      },
+      {
+        id: "fridge-oven",
+        name: "Fridge & Microwave Deep Sanitization",
+        price: 399,
+        priceDisplay: "+₹399",
+        description: "Interior shelves, gasket descaling & food-safe wipe",
+      },
+      {
+        id: "room-fogging",
+        name: "Anti-Bacterial Herbal Fogging",
+        price: 499,
+        priceDisplay: "+₹499",
+        description: "Eliminate airborne germs and tropical moisture odors",
+      },
+    ],
   },
   {
     id: "event-cleaning",
+    slug: "event-cleaning",
     title: "Event Cleaning",
-    shortDesc: "Reliable, discreet cleaning before and after special occasions, parties, and weddings.",
+    category: "event",
+    categoryLabel: "Special Occasions",
+    rating: 4.9,
+    reviewCount: 38,
+    shortDesc: "Discreet and fast pre-event staging and post-party teardown cleaning for weddings, family functions, and banquets.",
     tagline: "Stress-free celebration spaces, spotless and guest-ready",
     image: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80",
-    estimate: "Custom Quote",
-    duration: "Flexible / Shift-based",
+    badge: "Fast Crew",
+    estimate: "From ₹1,999",
+    startingPrice: 1999,
+    duration: "3 – 5 Hours",
     highlights: [
-      "Pre-event staging & venue prep",
-      "Continuous trash collection & restroom monitoring",
-      "Post-party complete teardown cleaning",
-      "Spill management & floor restoration",
-      "Rapid turnaround for banquet & home venues"
+      "Pre-event floor polishing & chair/table setup",
+      "Restroom maintenance & sanitization throughout",
+      "Post-event comprehensive waste sorting & disposal",
+      "Dining hall food spill & grease removal",
+      "Outdoor veranda & lawn litter cleanup"
     ],
     inclusions: [
-      "Pre-event floor polishing & chair/table setup cleaning",
-      "Waste disposal, sorting and recycling",
-      "Restroom maintenance throughout the function",
-      "Post-event comprehensive sanitization",
-      "Outdoor lawn & veranda clean-up"
+      "Pre-event floor buffing & hall dusting",
+      "Dedicated waste bagging & prompt removal",
+      "Continuous restroom upkeep & deodorization",
+      "Post-function full premises scrub & mop",
+      "Outdoor car porch & entryway washing"
     ],
     idealFor: [
-      "Weddings & engagement functions",
-      "Family gatherings & birthday celebrations",
-      "Corporate banquets & seminars",
-      "Housewarming ceremonies (Griha Pravesham)"
-    ]
+      "Weddings & engagement ceremonies",
+      "Griha Pravesham (Housewarming) functions",
+      "Family birthday parties & anniversaries",
+      "Corporate banquets & seminars"
+    ],
+    tiers: [
+      {
+        id: "post-party",
+        name: "Post-Party Home Cleanup",
+        price: 1999,
+        priceDisplay: "₹1,999",
+        duration: "3 – 4 Hours",
+        description: "Living hall, dining area, kitchen reset, and waste removal",
+        isPopular: true,
+      },
+      {
+        id: "griha-pravesham",
+        name: "Griha Pravesham Festive Prep",
+        price: 2999,
+        priceDisplay: "₹2,999",
+        duration: "5 – 6 Hours",
+        description: "Entire premises buffed, spotless bathrooms, entrance wash",
+      },
+      {
+        id: "commercial-venue",
+        name: "Banquet / Auditorium Clean",
+        price: 0,
+        priceDisplay: "Custom Quote",
+        duration: "Custom Shift",
+        description: "Auditoriums, party halls & convention spaces (on-site visit)",
+      },
+    ],
+    addons: [
+      {
+        id: "waste-disposal",
+        name: "Extra Waste Bagging & Lawn Sweeping",
+        price: 399,
+        priceDisplay: "+₹399",
+        description: "Gather and sack all event trash & sweep car porch/gardens",
+      },
+      {
+        id: "floor-buffing",
+        name: "Rotary Single-Disc Floor Buffing",
+        price: 599,
+        priceDisplay: "+₹599",
+        description: "Machine buffing for marble, vitrified, or granite flooring",
+      },
+    ],
   },
   {
     id: "sofa-cleaning",
+    slug: "sofa-cleaning",
     title: "Sofa Cleaning",
-    shortDesc: "Deep extraction shampooing and fabric care for upholstered furniture and recliners.",
+    category: "sofa",
+    categoryLabel: "Upholstery",
+    rating: 4.9,
+    reviewCount: 46,
+    shortDesc: "German injection-extraction deep foam shampooing. Removes tough stains, tea spills, dust mites, and restores fabric freshness.",
     tagline: "Revitalize fibers, remove tough stains, and banish allergens",
     image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1200&q=80",
     popular: true,
-    estimate: "From ₹699 / 3-seater",
+    badge: "Top Rated",
+    estimate: "From ₹699",
+    startingPrice: 699,
     duration: "60 – 90 Mins",
     highlights: [
       "High-power fabric dry vacuuming",
-      "Eco-friendly fabric foam shampooing",
-      "Deep moisture & dirt extraction",
-      "Food stain, pet odor & smudge removal",
-      "Leather sofa conditioning & polish"
+      "Eco-friendly deep foam shampoo injection",
+      "High-power moisture & grime extraction",
+      "Stubborn food stain, tea spill & ink spot treatment",
+      "Leather & fabric conditioning with delicate fragrance"
     ],
     inclusions: [
-      "Industrial suction extraction of embedded dust",
-      "Spot treatment for tea, coffee, food & grease stains",
+      "Industrial suction extraction of embedded allergens",
+      "Targeted spot treatment for stubborn patches",
       "Anti-bacterial fabric freshener treatment",
-      "Cushion and crevice detailing",
-      "Fast drying formulation (ready in 2-3 hours)"
+      "Cushion edges and deep crevice detailing",
+      "Rapid drying formulation (ready in 2–3 hours)"
     ],
     idealFor: [
       "Fabric, velvet, suede & microfiber sofas",
       "Leather and faux-leather recliners",
       "Dining chairs & office seats",
       "Allergy prevention & odor removal"
-    ]
+    ],
+    tiers: [
+      {
+        id: "3seater",
+        name: "3-Seater Sofa",
+        price: 699,
+        priceDisplay: "₹699",
+        duration: "45 – 60 Mins",
+        description: "Standard 3-seater fabric or leatherette sofa",
+        isPopular: true,
+      },
+      {
+        id: "5seater-l",
+        name: "5-Seater L-Shape Sofa",
+        price: 1199,
+        priceDisplay: "₹1,199",
+        duration: "75 – 90 Mins",
+        description: "3+2 or L-shaped sectional couch with lounger",
+      },
+      {
+        id: "7seater-sec",
+        name: "7-Seater Royal Sectional",
+        price: 1599,
+        priceDisplay: "₹1,599",
+        duration: "100 – 120 Mins",
+        description: "Full living room set with armrests and loose cushions",
+      },
+      {
+        id: "recliner",
+        name: "Single Recliner Chair",
+        price: 299,
+        priceDisplay: "₹299",
+        duration: "30 Mins",
+        description: "Manual or motorized single recliner detailing",
+      },
+      {
+        id: "dining-chairs",
+        name: "Dining Chairs (Set of 6)",
+        price: 699,
+        priceDisplay: "₹699",
+        duration: "45 Mins",
+        description: "Cushioned dining chair fabric extraction",
+      },
+    ],
+    addons: [
+      {
+        id: "stain-guard",
+        name: "Fabric Shield Anti-Stain Coat",
+        price: 299,
+        priceDisplay: "+₹299",
+        description: "Repels future liquid and food spill stains",
+      },
+      {
+        id: "pillow-steam",
+        name: "Throw Pillows & Cushions Deep Steam",
+        price: 199,
+        priceDisplay: "+₹199",
+        description: "High-heat sanitization for up to 6 decorative pillows",
+      },
+    ],
   },
   {
     id: "mattress-cleaning",
+    slug: "mattress-cleaning",
     title: "Mattress Cleaning",
-    shortDesc: "Thorough ultraviolet sanitization and deep steam extraction for a healthier sleep.",
-    tagline: "Eradicate dust mites, dead skin cells, and allergens",
+    category: "mattress",
+    categoryLabel: "Bed Sanitization",
+    rating: 4.9,
+    reviewCount: 29,
+    shortDesc: "Double-sided dust-mite vibration suction vacuuming and hospital-grade germicidal UV-C light sanitization.",
+    tagline: "Eradicate dust mites, dead skin cells, and allergens for healthy sleep",
     image: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1200&q=80",
-    estimate: "From ₹799 / mattress",
+    badge: "UV-C Tech",
+    estimate: "From ₹599",
+    startingPrice: 599,
     duration: "45 – 60 Mins",
     highlights: [
-      "Anti-dust-mite UV & suction extraction",
-      "Deep foam sanitization & stain lifting",
-      "Odor neutralization & fabric conditioning",
-      "Moisture vacuum extraction for quick drying",
-      "Safe for infants, elders & sensitive skin"
+      "Deep vibration suction dust-mite extraction",
+      "Hospital-grade UV-C light sanitization",
+      "Stain lightening for sweat & biological marks",
+      "Herbal anti-allergen deodorizing mist",
+      "Safe for infants, elders & asthma sufferers"
     ],
     inclusions: [
-      "Double-sided deep vibration vacuuming",
-      "Targeted stain lightening (sweat, spills, biological stains)",
-      "Hospital-grade sanitizing spray",
-      "Moisture extraction with high-power blow drying",
+      "Double-sided high-power filtration vacuuming",
+      "UV-C germicidal pass eradicating bacteria & mites",
+      "Targeted foam treatment on visible stains",
+      "Moisture vacuum extraction for prompt drying",
       "Bed frame & headboard wipe down"
     ],
     idealFor: [
       "King, Queen, & Single mattresses",
-      "Homes with kids, pets, or asthma sufferers",
+      "Homes with kids, pets, or allergy sufferers",
       "Post-illness bedroom sanitization",
       "Routine bi-annual mattress wellness"
-    ]
-  }
+    ],
+    tiers: [
+      {
+        id: "single-matt",
+        name: "Single Bed Mattress",
+        price: 599,
+        priceDisplay: "₹599",
+        duration: "30 – 40 Mins",
+        description: "Single size (36x72 or 36x75) double-sided vacuum & UV",
+      },
+      {
+        id: "queen-matt",
+        name: "Queen Size Bed Mattress",
+        price: 799,
+        priceDisplay: "₹799",
+        duration: "45 – 50 Mins",
+        description: "Queen size (60x78) deep extraction & UV sterilization",
+        isPopular: true,
+      },
+      {
+        id: "king-matt",
+        name: "King Size Bed Mattress",
+        price: 999,
+        priceDisplay: "₹999",
+        duration: "55 – 60 Mins",
+        description: "King size (72x78) comprehensive allergen decontamination",
+      },
+      {
+        id: "two-matt-pack",
+        name: "2 Mattresses Combo Pack",
+        price: 1399,
+        priceDisplay: "₹1,399",
+        duration: "80 – 90 Mins",
+        description: "1 King + 1 Queen or 2 Single beds package deal",
+      },
+    ],
+    addons: [
+      {
+        id: "headboard-clean",
+        name: "Upholstered Headboard Vacuuming",
+        price: 249,
+        priceDisplay: "+₹249",
+        description: "Deep dust extraction from tufted headboards",
+      },
+      {
+        id: "botanical-mist",
+        name: "Anti-Allergen Eucalyptus Mist",
+        price: 199,
+        priceDisplay: "+₹199",
+        description: "Safe natural repellent preventing dust mite settlement",
+      },
+    ],
+  },
 ];
 
 export interface ReviewItem {
@@ -333,14 +602,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
 
 export const SERVICE_LOCATIONS = [
   "Thamarassery",
-  "Koduvally",
-  "Balussery",
-  "Kunnamangalam",
-  "Adivaram",
-  "Engapuzha",
-  "Eranhikkal",
-  "Kozhikode City (Calicut)",
-  "Wayanad Foothills Route"
+  "Kochi"
 ];
 
 export const CONTACT_INFO = {

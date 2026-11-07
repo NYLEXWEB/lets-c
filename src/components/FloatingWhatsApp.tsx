@@ -9,7 +9,7 @@ export default function FloatingWhatsApp() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end">
+    <div className="hidden sm:flex fixed bottom-6 right-6 z-40 flex-col items-end">
       {/* Popover Bubble */}
       {isOpen && (
         <div className="mb-3 w-64 bg-white rounded-2xl shadow-xl border border-black/[0.08] p-4 animate-in fade-in slide-in-from-bottom-2 duration-150">

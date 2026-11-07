@@ -18,7 +18,7 @@ export default function Contact() {
             Connect with Our Team
           </h2>
           <p className="text-base text-[#6E6E73] font-light leading-relaxed">
-            Our hub in Thamarassery coordinates residential and event cleaning across Kozhikode.
+            Our hubs in Thamarassery & Kochi coordinate residential and event cleaning services.
           </p>
         </div>
 

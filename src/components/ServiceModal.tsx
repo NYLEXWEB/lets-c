@@ -28,7 +28,7 @@ export default function ServiceModal({
 
       {/* Modal Dialog */}
       <div className="relative w-full max-w-xl bg-white rounded-3xl shadow-2xl overflow-hidden z-10 max-h-[85vh] flex flex-col border border-black/[0.08] animate-in fade-in zoom-in-95 duration-150">
-        
+
         {/* Header Image */}
         <div className="relative h-48 sm:h-56 w-full shrink-0 bg-neutral-900">
           <Image
@@ -57,7 +57,7 @@ export default function ServiceModal({
 
         {/* Body Content */}
         <div className="p-6 sm:p-8 overflow-y-auto space-y-6 text-neutral-800">
-          
+
           <div>
             <h4 className="text-[11px] uppercase tracking-wider font-normal text-neutral-400 mb-1.5">
               Service Scope
@@ -102,8 +102,8 @@ export default function ServiceModal({
         {/* Footer */}
         <div className="p-4 sm:p-6 bg-[#FBFBFD] border-t border-black/[0.06] flex items-center justify-between shrink-0">
           <div>
-            <span className="text-[11px] text-neutral-400 font-light block">Standard rate</span>
-            <span className="text-sm font-normal text-black">{service.estimate}</span>
+            <span className="text-[10px] text-neutral-400 font-light block uppercase tracking-wider">Starting rate</span>
+            <span className="text-base font-bold text-black">{service.estimate}</span>
           </div>
 
           <button
@@ -111,9 +111,10 @@ export default function ServiceModal({
               onSelectForBooking(service.title);
               onClose();
             }}
-            className="px-5 py-2.5 rounded-full bg-black hover:bg-neutral-800 text-white text-xs font-normal transition-colors cursor-pointer"
+            className="px-5 py-2.5 rounded-full bg-black hover:bg-neutral-800 text-white text-xs font-medium transition-all active:scale-98 cursor-pointer flex items-center gap-1.5 shadow-2xs"
           >
-            Select for Booking
+            <span>Configure & Book</span>
+            <Check className="w-3.5 h-3.5" />
           </button>
         </div>
 

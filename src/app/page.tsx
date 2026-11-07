@@ -5,13 +5,13 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Services from "@/components/Services";
 import WhyChooseUs from "@/components/WhyChooseUs";
-import Process from "@/components/Process";
 import BeforeAfterGallery from "@/components/BeforeAfterGallery";
 import Reviews from "@/components/Reviews";
 import BookingForm from "@/components/BookingForm";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
+import MobileBottomBar from "@/components/MobileBottomBar";
 
 export default function Home() {
   const [selectedServiceForBooking, setSelectedServiceForBooking] = useState<string>("Home Cleaning");
@@ -34,24 +34,21 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen flex flex-col relative selection:bg-[#03B9F4] selection:text-white">
-      {/* Sticky Navigation */}
+    <main className="min-h-screen flex flex-col relative selection:bg-[#03B9F4] selection:text-white pb-16 sm:pb-0">
+      {/* Sticky Navigation with Quick Enquiry */}
       <Navbar onBookClick={() => scrollToBooking()} />
 
-      {/* Hero Section */}
+      {/* Hero Section: Preserved Desktop Video Layout + Safsafaiwala Mobile Lead-Gen Layout */}
       <Hero
         onBookClick={() => scrollToBooking()}
         onExploreClick={scrollToServices}
       />
 
-      {/* Services Section (Highest Priority, Urban Company Reference) */}
+      {/* Services Section: Clean Cards with Prominent "Enquiry Now" CTAs */}
       <Services onSelectService={(service) => scrollToBooking(service)} />
 
-      {/* Why Choose Let's C */}
+      {/* Why Choose Let's C: Clean Trust & Value Badges */}
       <WhyChooseUs />
-
-      {/* 3-Step Cleaning Process */}
-      <Process onStartBooking={() => scrollToBooking()} />
 
       {/* Before & After Interactive Showcase */}
       <BeforeAfterGallery />
@@ -59,7 +56,7 @@ export default function Home() {
       {/* Google Reviews Section (4.9 Stars, 20+ Reviews) */}
       <Reviews />
 
-      {/* Booking and WhatsApp Enquiry Form */}
+      {/* Simple Enquiry Form (Full Name, Phone, Service, Location, Message + WhatsApp) */}
       <BookingForm initialService={selectedServiceForBooking} />
 
       {/* Contact & Service Area Coverage */}
@@ -68,8 +65,11 @@ export default function Home() {
       {/* Footer */}
       <Footer />
 
-      {/* Floating Mascot & WhatsApp Quick Action */}
+      {/* Desktop Floating WhatsApp Assistant */}
       <FloatingWhatsApp />
+
+      {/* Mobile Sticky Action Bar: Call Us | WhatsApp | Enquiry Now */}
+      <MobileBottomBar onEnquiryClick={() => scrollToBooking()} />
     </main>
   );
 }

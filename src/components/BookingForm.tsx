@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { ArrowRight, Check, X, ShieldCheck } from "lucide-react";
+import { ArrowRight, Check, X, ShieldCheck, Phone, MessageSquare, Send, Sparkles } from "lucide-react";
 import { CONTACT_INFO, SERVICES_DATA } from "@/data/cleaningData";
 
 interface BookingFormProps {
@@ -13,12 +13,9 @@ export default function BookingForm({ initialService }: BookingFormProps) {
   const [formData, setFormData] = useState({
     fullName: "",
     phone: "",
-    email: "",
     service: initialService || "Home Cleaning",
-    preferredDate: "",
-    preferredTime: "Morning (9:00 AM – 1:00 PM)",
     location: "",
-    notes: "",
+    message: "",
   });
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -33,14 +30,14 @@ export default function BookingForm({ initialService }: BookingFormProps) {
 
   const validate = () => {
     const newErrors: { [key: string]: string } = {};
-    if (!formData.fullName.trim()) newErrors.fullName = "Please enter your name.";
+    if (!formData.fullName.trim()) newErrors.fullName = "Please enter your full name.";
     if (!formData.phone.trim()) {
-      newErrors.phone = "Please enter your contact number.";
+      newErrors.phone = "Please enter your phone number.";
     } else if (!/^\+?[0-9\s-]{10,14}$/.test(formData.phone.trim())) {
-      newErrors.phone = "Valid 10-digit number required.";
+      newErrors.phone = "Please enter a valid 10-digit phone number.";
     }
-    if (!formData.preferredDate) newErrors.preferredDate = "Select a date.";
-    if (!formData.location.trim()) newErrors.location = "Specify your area (e.g. Thamarassery).";
+    if (!formData.service) newErrors.service = "Please select a service.";
+    if (!formData.location.trim()) newErrors.location = "Please enter your location (Thamarassery or Kochi).";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -52,24 +49,22 @@ export default function BookingForm({ initialService }: BookingFormProps) {
 
     setIsSubmitting(true);
 
-    const message = `*LET'S C — CLEANING BOOKING*
+    const whatsappText = `*NEW CLEANING ENQUIRY — LET'S C*
 --------------------------------
-👤 *Name:* ${formData.fullName}
-📞 *Phone:* ${formData.phone}
-${formData.email ? `✉️ *Email:* ${formData.email}\n` : ""}🧹 *Service:* ${formData.service}
-📅 *Date:* ${formData.preferredDate}
-⏰ *Time:* ${formData.preferredTime}
+👤 *Full Name:* ${formData.fullName}
+📞 *Phone Number:* ${formData.phone}
+🧹 *Service Required:* ${formData.service}
 📍 *Location:* ${formData.location}
-${formData.notes ? `📝 *Notes:* ${formData.notes}\n` : ""}--------------------------------
-Sent via letsc-cleaning.com`;
+${formData.message ? `📝 *Message:* ${formData.message}\n` : ""}--------------------------------
+Sent via Let's C Website`;
 
-    const whatsappUrl = `https://wa.me/${CONTACT_INFO.whatsapp}?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/${CONTACT_INFO.whatsapp}?text=${encodeURIComponent(whatsappText)}`;
 
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
       window.open(whatsappUrl, "_blank");
-    }, 500);
+    }, 400);
   };
 
   const handleReset = () => {
@@ -77,40 +72,37 @@ Sent via letsc-cleaning.com`;
     setFormData({
       fullName: "",
       phone: "",
-      email: "",
       service: "Home Cleaning",
-      preferredDate: "",
-      preferredTime: "Morning (9:00 AM – 1:00 PM)",
       location: "",
-      notes: "",
+      message: "",
     });
   };
 
   return (
-    <section id="booking" className="py-24 lg:py-32 bg-[#FBFBFD] relative">
+    <section id="booking" className="py-20 lg:py-28 bg-[#F8FAFC] relative">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Header */}
-        <div className="max-w-xl mx-auto text-center mb-16 space-y-3">
-          <span className="text-[11px] uppercase tracking-[0.2em] font-normal text-[#03B9F4] block">
-            Reservation
+
+        {/* Section Header */}
+        <div className="max-w-xl mx-auto text-center mb-12 space-y-3">
+          <span className="text-xs font-semibold uppercase tracking-wider text-[#03B9F4] bg-[#EAF8FF] px-3.5 py-1 rounded-full border border-sky-100 inline-block">
+            Instant Enquiry
           </span>
-          <h2 className="text-3xl sm:text-5xl font-light text-black tracking-[-0.03em]">
-            Schedule Your Visit
+          <h2 className="text-2xl sm:text-4xl font-normal text-[#17191C] tracking-tight">
+            Request a Free Cleaning Quote
           </h2>
-          <p className="text-base text-[#6E6E73] font-light leading-relaxed">
-            Fill out your details to lock in a dedicated cleaning crew in Kozhikode.
+          <p className="text-sm text-[#64748B] font-light leading-relaxed">
+            Fill in the details below. Our Thamarassery coordinator will respond within 15 minutes with availability and pricing.
           </p>
         </div>
 
-        {/* Minimalist Form Card */}
-        <div className="apple-card p-8 sm:p-12 rounded-3xl bg-white">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            
-            {/* Name & Phone */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {/* Lead Capture Form Card */}
+        <div className="bg-white p-6 sm:p-10 rounded-3xl border border-slate-200/80 shadow-lg shadow-slate-200/50">
+          <form onSubmit={handleSubmit} className="space-y-5">
+
+            {/* Row 1: Full Name & Phone Number */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               <div>
-                <label className="block text-[11px] uppercase tracking-wider font-normal text-neutral-400 mb-2">
+                <label className="block text-xs font-medium text-slate-700 mb-1.5">
                   Full Name *
                 </label>
                 <input
@@ -118,19 +110,18 @@ Sent via letsc-cleaning.com`;
                   placeholder="e.g. Rahul Menon"
                   value={formData.fullName}
                   onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                  className={`w-full px-4 py-3 rounded-xl border text-xs text-neutral-900 placeholder-neutral-400 focus:outline-none transition-colors ${
-                    errors.fullName
+                  className={`w-full px-4 py-3 rounded-xl border text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-colors ${errors.fullName
                       ? "border-rose-300 bg-rose-50/20"
-                      : "border-black/[0.08] focus:border-black"
-                  }`}
+                      : "border-slate-200 focus:border-[#03B9F4] focus:ring-2 focus:ring-sky-100"
+                    }`}
                 />
                 {errors.fullName && (
-                  <p className="text-[11px] text-rose-500 mt-1 font-light">{errors.fullName}</p>
+                  <p className="text-xs text-rose-500 mt-1">{errors.fullName}</p>
                 )}
               </div>
 
               <div>
-                <label className="block text-[11px] uppercase tracking-wider font-normal text-neutral-400 mb-2">
+                <label className="block text-xs font-medium text-slate-700 mb-1.5">
                   Phone Number *
                 </label>
                 <input
@@ -138,139 +129,96 @@ Sent via letsc-cleaning.com`;
                   placeholder="e.g. 98470 12345"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className={`w-full px-4 py-3 rounded-xl border text-xs text-neutral-900 placeholder-neutral-400 focus:outline-none transition-colors ${
-                    errors.phone
+                  className={`w-full px-4 py-3 rounded-xl border text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-colors ${errors.phone
                       ? "border-rose-300 bg-rose-50/20"
-                      : "border-black/[0.08] focus:border-black"
-                  }`}
+                      : "border-slate-200 focus:border-[#03B9F4] focus:ring-2 focus:ring-sky-100"
+                    }`}
                 />
                 {errors.phone && (
-                  <p className="text-[11px] text-rose-500 mt-1 font-light">{errors.phone}</p>
+                  <p className="text-xs text-rose-500 mt-1">{errors.phone}</p>
                 )}
               </div>
             </div>
 
-            {/* Service & Email */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {/* Row 2: Service Required & Location */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               <div>
-                <label className="block text-[11px] uppercase tracking-wider font-normal text-neutral-400 mb-2">
-                  Service Selection *
+                <label className="block text-xs font-medium text-slate-700 mb-1.5">
+                  Service Required *
                 </label>
                 <select
                   value={formData.service}
                   onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border border-black/[0.08] text-xs text-neutral-900 bg-white focus:outline-none focus:border-black transition-colors"
+                  className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm text-slate-900 bg-white focus:outline-none focus:border-[#03B9F4] focus:ring-2 focus:ring-sky-100 transition-colors"
                 >
                   {SERVICES_DATA.map((srv) => (
                     <option key={srv.id} value={srv.title}>
                       {srv.title} ({srv.estimate})
                     </option>
                   ))}
-                  <option value="Villa / Commercial Inspection">Custom Inspection</option>
+                  <option value="Commercial / Villa Inspection">Commercial / Villa Inspection</option>
+                  <option value="Other Cleaning Enquiry">Other Cleaning Enquiry</option>
                 </select>
               </div>
 
               <div>
-                <label className="block text-[11px] uppercase tracking-wider font-normal text-neutral-400 mb-2">
-                  Email Address <span className="text-neutral-400 font-light">(Optional)</span>
+                <label className="block text-xs font-medium text-slate-700 mb-1.5">
+                  Location (Thamarassery / Kochi) *
                 </label>
                 <input
-                  type="email"
-                  placeholder="name@example.com"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border border-black/[0.08] text-xs text-neutral-900 placeholder-neutral-400 focus:outline-none focus:border-black transition-colors"
-                >
-                </input>
-              </div>
-            </div>
-
-            {/* Date & Time */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-[11px] uppercase tracking-wider font-normal text-neutral-400 mb-2">
-                  Preferred Date *
-                </label>
-                <input
-                  type="date"
-                  value={formData.preferredDate}
-                  onChange={(e) => setFormData({ ...formData, preferredDate: e.target.value })}
-                  className={`w-full px-4 py-3 rounded-xl border text-xs text-neutral-900 focus:outline-none transition-colors ${
-                    errors.preferredDate
+                  type="text"
+                  placeholder="e.g. Thamarassery or Kochi"
+                  value={formData.location}
+                  onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                  className={`w-full px-4 py-3 rounded-xl border text-sm text-slate-900 placeholder-slate-400 focus:outline-none transition-colors ${errors.location
                       ? "border-rose-300 bg-rose-50/20"
-                      : "border-black/[0.08] focus:border-black"
-                  }`}
+                      : "border-slate-200 focus:border-[#03B9F4] focus:ring-2 focus:ring-sky-100"
+                    }`}
                 />
-                {errors.preferredDate && (
-                  <p className="text-[11px] text-rose-500 mt-1 font-light">{errors.preferredDate}</p>
+                {errors.location && (
+                  <p className="text-xs text-rose-500 mt-1">{errors.location}</p>
                 )}
               </div>
-
-              <div>
-                <label className="block text-[11px] uppercase tracking-wider font-normal text-neutral-400 mb-2">
-                  Preferred Time Slot
-                </label>
-                <select
-                  value={formData.preferredTime}
-                  onChange={(e) => setFormData({ ...formData, preferredTime: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border border-black/[0.08] text-xs text-neutral-900 bg-white focus:outline-none focus:border-black transition-colors"
-                >
-                  <option value="Morning (9:00 AM – 1:00 PM)">Morning (9:00 AM – 1:00 PM)</option>
-                  <option value="Afternoon (1:00 PM – 4:00 PM)">Afternoon (1:00 PM – 4:00 PM)</option>
-                  <option value="Evening (4:00 PM – 7:30 PM)">Evening (4:00 PM – 7:30 PM)</option>
-                </select>
-              </div>
             </div>
 
-            {/* Address */}
+            {/* Row 3: Message / Specific Requirements */}
             <div>
-              <label className="block text-[11px] uppercase tracking-wider font-normal text-neutral-400 mb-2">
-                Address / Locality in Kozhikode *
-              </label>
-              <input
-                type="text"
-                placeholder="e.g. Thamarassery, Koduvally, Balussery, or Kozhikode"
-                value={formData.location}
-                onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                className={`w-full px-4 py-3 rounded-xl border text-xs text-neutral-900 placeholder-neutral-400 focus:outline-none transition-colors ${
-                  errors.location
-                    ? "border-rose-300 bg-rose-50/20"
-                    : "border-black/[0.08] focus:border-black"
-                }`}
-              />
-              {errors.location && (
-                <p className="text-[11px] text-rose-500 mt-1 font-light">{errors.location}</p>
-              )}
-            </div>
-
-            {/* Notes */}
-            <div>
-              <label className="block text-[11px] uppercase tracking-wider font-normal text-neutral-400 mb-2">
-                Special Instructions <span className="text-neutral-400 font-light">(Optional)</span>
+              <label className="block text-xs font-medium text-slate-700 mb-1.5">
+                Message / Details <span className="text-slate-400 font-normal">(Optional)</span>
               </label>
               <textarea
-                rows={2}
-                placeholder="Specific room count, carpet stain focus, balcony requirements..."
-                value={formData.notes}
-                onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl border border-black/[0.08] text-xs text-neutral-900 placeholder-neutral-400 focus:outline-none focus:border-black transition-colors resize-none"
+                rows={3}
+                placeholder="Mention number of rooms, sofa seats, preferred timing or specific cleaning requirements..."
+                value={formData.message}
+                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#03B9F4] focus:ring-2 focus:ring-sky-100 transition-colors resize-none"
               />
             </div>
 
-            {/* Actions */}
-            <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="flex items-center gap-1.5 text-xs text-neutral-400 font-light">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#03B9F4]" />
-                <span>Zero advance deposit. Pay after satisfaction.</span>
-              </div>
-
+            {/* Action Buttons Row */}
+            <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full sm:w-auto px-8 py-3 rounded-full bg-black hover:bg-neutral-800 text-white text-xs font-normal transition-colors cursor-pointer disabled:opacity-50 tracking-[-0.01em]"
+                className="flex-1 py-3.5 px-6 rounded-full bg-black hover:bg-neutral-800 text-white text-sm font-medium transition-colors cursor-pointer flex items-center justify-center gap-2 shadow-sm disabled:opacity-50"
               >
-                {isSubmitting ? "Processing..." : "Submit & Open WhatsApp"}
+                <Send className="w-4 h-4" />
+                <span>{isSubmitting ? "Preparing Enquiry..." : "Submit Enquiry (WhatsApp)"}</span>
               </button>
+
+              <a
+                href={`tel:${CONTACT_INFO.phone.replace(/\s+/g, "")}`}
+                className="py-3.5 px-6 rounded-full bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 text-sm font-medium transition-colors flex items-center justify-center gap-2"
+              >
+                <Phone className="w-4 h-4 text-[#03B9F4]" />
+                <span>Call Directly</span>
+              </a>
+            </div>
+
+            {/* Reassurance */}
+            <div className="flex items-center justify-center gap-2 text-xs text-slate-500 pt-1">
+              <ShieldCheck className="w-4 h-4 text-emerald-500" />
+              <span>Zero cancellation fee • Pay safely after inspection</span>
             </div>
 
           </form>
@@ -282,8 +230,8 @@ Sent via letsc-cleaning.com`;
       {isSubmitted && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="fixed inset-0 bg-black/40 backdrop-blur-xs" onClick={handleReset} />
-          
-          <div className="relative bg-white rounded-3xl p-8 max-w-sm w-full text-center z-10 border border-black/[0.08] shadow-2xl animate-in fade-in zoom-in-95 duration-150">
+
+          <div className="relative bg-white rounded-3xl p-7 max-w-sm w-full text-center z-10 border border-black/[0.08] shadow-2xl animate-in fade-in zoom-in-95 duration-150">
             <button
               onClick={handleReset}
               className="absolute top-4 right-4 p-1.5 text-neutral-400 hover:text-black rounded-full transition-colors"
@@ -291,21 +239,16 @@ Sent via letsc-cleaning.com`;
               <X className="w-4 h-4" />
             </button>
 
-            <div className="relative w-20 h-24 mx-auto mb-4 rounded-xl overflow-hidden bg-[#F5F9FC]">
-              <Image
-                src="/images/mascot.jpg"
-                alt="Let's C Mascot"
-                fill
-                className="object-cover"
-              />
+            <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-3">
+              <Check className="w-6 h-6 stroke-[3]" />
             </div>
 
-            <h3 className="text-lg font-normal text-black mb-1 tracking-[-0.015em]">
-              Request Received
+            <h3 className="text-lg font-normal text-black mb-1">
+              Enquiry Form Ready!
             </h3>
 
-            <p className="text-xs text-[#6E6E73] font-light leading-relaxed mb-6">
-              Thank you, <strong>{formData.fullName}</strong>. WhatsApp has been opened with your booking summary for <strong>{formData.service}</strong>.
+            <p className="text-xs text-[#6E6E73] font-light leading-relaxed mb-5">
+              Thank you, <strong>{formData.fullName}</strong>. WhatsApp has opened with your enquiry for <strong>{formData.service}</strong> in <strong>{formData.location}</strong>.
             </p>
 
             <button
