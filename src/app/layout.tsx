@@ -3,60 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import fs from "fs";
 import path from "path";
-import { execSync } from "child_process";
 import { CartProvider } from "@/context/CartContext";
 import CartDrawer from "@/components/CartDrawer";
-
-// One-time git push execution
-try {
-  const cwd = process.cwd();
-  const gitLogFile = path.join(cwd, "git-push-log.txt");
-  let log = `Starting Git Push at ${new Date().toISOString()}\n`;
-  
-  try {
-    const status = execSync("git status", { cwd, encoding: "utf8" });
-    log += `[status]:\n${status}\n`;
-  } catch (e: any) {
-    log += `[status err]: ${e.message}\n`;
-  }
-
-  try {
-    try {
-      execSync("git remote remove origin", { cwd, stdio: "ignore" });
-    } catch {}
-    execSync("git remote add origin https://github.com/NithanthHarsha/letsc.git", { cwd, encoding: "utf8" });
-    log += `[remote]: Added origin https://github.com/NithanthHarsha/letsc.git\n`;
-  } catch (e: any) {
-    log += `[remote err]: ${e.message}\n`;
-  }
-
-  try {
-    execSync("git add .", { cwd, encoding: "utf8" });
-    log += `[add]: git add . completed\n`;
-  } catch (e: any) {
-    log += `[add err]: ${e.message}\n`;
-  }
-
-  try {
-    const commit = execSync('git commit -m "Update Let\'s C website with HandySquad workflow and cleanings"', { cwd, encoding: "utf8" });
-    log += `[commit]:\n${commit}\n`;
-  } catch (e: any) {
-    log += `[commit note]: ${e.message}\n`;
-  }
-
-  try {
-    const push = execSync("git push -u origin HEAD --force", { cwd, encoding: "utf8" });
-    log += `[push success]:\n${push}\n`;
-  } catch (e: any) {
-    log += `[push err]: ${e.message}\n${e.stderr || ""}\n`;
-  }
-
-  fs.writeFileSync(gitLogFile, log, "utf8");
-} catch (outerErr: any) {
-  try {
-    fs.writeFileSync(path.join(process.cwd(), "git-push-log.txt"), `Outer error: ${outerErr.message}`, "utf8");
-  } catch {}
-}
 
 // Ensure mascot promo image is copied to public/images for fast static serving
 try {
